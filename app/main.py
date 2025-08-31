@@ -1,7 +1,7 @@
-from display import ConsoleDisplay, ReverseDisplay
-from printer import ConsolePrinter, ReversePrinter
-from models import Book
-from serializer import XmlSerializer, JsonSerializer
+from app.display import ConsoleDisplay, ReverseDisplay
+from app.printer import ConsolePrinter, ReversePrinter
+from app.models import Book
+from app.serializer import XmlSerializer, JsonSerializer
 
 
 def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
@@ -14,16 +14,16 @@ def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
         "reverse": ReversePrinter(),
     }
     serializers = {
-        "json": JsonSerializer,
-        "xml": XmlSerializer,
+        "json": JsonSerializer(),
+        "xml": XmlSerializer(),
     }
     for cmd, method_type in commands:
         if cmd == "display":
             display_strategies[method_type].display(book)
         elif cmd == "print":
-            print_strategies[method_type].print(book)
+            print_strategies[method_type].print_book(book)
         elif cmd == "serialize":
-            serializers[method_type].serialize(book)
+            return serializers[method_type].serialize(book)
 
 
 if __name__ == "__main__":
